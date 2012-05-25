@@ -27,15 +27,14 @@ class BayProxy {
 			if (!$this->isFile($_GET["p"])) {
 				$this->fqdn = $this->getFQDN($_GET["p"]);
 				$_SESSION["fqdn"] = $this->fqdn;
-				print ("<html>" . $this->getParsedHTML($this->getData($_GET["p"])) . "</html>");
+				print ($this->getParsedHTML($this->getData($_GET["p"])));
 			} else {
 				$this->getFile($_GET["p"]);
 			}
 		} else {
 			if (isset ($_GET["q"]) && isset ($_SESSION["fqdn"])) {
-				$parsed_url = parse_url($_GET["q"]);
-				$this->fqdn = !array_key_exists("host", $parsed_url) ? $_SESSION["fqdn"] : $parsed_url["host"];
-				print ("<html>" . $this->getParsedHTML($this->getData($this->fqdn . "/search/" . $_GET["q"])) . "</html>");
+				$this->fqdn = $_SESSION["fqdn"];
+				print ($this->getParsedHTML($this->getData($this->fqdn . "/search/" . $_GET["q"])));
 			} else {
 				header("Location: " . $_SERVER["PHP_SELF"] . "?p=" . _THEPIRATEBAY_);
 			}
